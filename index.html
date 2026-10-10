@@ -21,6 +21,7 @@
   --up:#1E8236; --night:rgba(8,35,91,.07); --heading:#08235B; --callout:#08235B; --callout-ink:#FFFFFF;
   --logo-light:block; --logo-dark:none;
   --font:'Montserrat','Helvetica Neue',Arial,system-ui,sans-serif;
+  --ro-tile:var(--card); --ro-up:var(--up); --ro-head:var(--heading); --ro-lgrey:var(--lgrey);
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --ink:#E4EAF2; --muted:#9AA6B5; --rule:#24395E; --bg:#0A1630; --card:#0F2142; --sand:#1B2A44; --band:#132849;
@@ -168,6 +169,55 @@ footer::before{content:"";position:absolute;top:-2px;left:0;width:60px;height:3p
 footer .tl{color:var(--heading);font-weight:700;letter-spacing:.14em;font-size:11px;margin-bottom:6px}
 footer a{color:var(--teal)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ---- Rain outlook (shared by the Peer Tracker Weather page and the Field Weather app) ---- */
+.ro{display:flex;flex-direction:column;gap:12px}
+.ro-lede{margin:0;color:var(--muted);font-size:12.5px;max-width:84ch;line-height:1.55}
+.ro-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ro-kpis.five{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:900px){.ro-kpis.five{grid-template-columns:repeat(2,minmax(0,1fr))}.ro-kpis.five .ro-k:first-child{grid-column:1/-1}}
+@media (max-width:700px){.ro-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ro-k{background:var(--ro-tile);border:1px solid var(--rule);border-radius:8px;padding:11px 12px 10px 15px;min-width:0;box-shadow:inset 3px 0 0 var(--grey)}
+.ro-k.up{box-shadow:inset 3px 0 0 var(--ro-up)} .ro-k.dn{box-shadow:inset 3px 0 0 var(--brick)}
+.ro-k.hero{background:var(--sand)}
+.ro-k .l{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.ro-k .v{font-size:23px;font-weight:400;color:var(--roc,var(--ro-head));font-variant-numeric:tabular-nums;line-height:1.2;margin-top:3px}
+.ro-k .v small{font-size:12.5px;font-weight:400;color:var(--muted)}
+.ro-k .s{font-size:11.5px;color:var(--muted);min-height:1.5em;overflow-wrap:anywhere}
+.ro-k .n{font-size:11.5px;font-weight:500;margin-top:4px;color:var(--muted)}
+.ro-k .n.up{color:var(--ro-up)} .ro-k .n.dn{color:var(--brick)}
+.ro-ph{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 12px;margin-bottom:8px}
+.ro-ph > b{color:var(--brown);font-size:13.5px}
+.ro-ph > span{font-size:11.5px;color:var(--muted)}
+.ro-ph a{color:var(--teal);font-weight:600;text-decoration:none}
+.ro-lg{display:flex;flex-wrap:wrap;gap:12px;font-size:11.5px;color:var(--muted)}
+.ro-lg i{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.ro-chart{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ro-chart svg{display:block}
+.ro-ax{font-size:10.5px;fill:var(--muted);font-family:inherit;font-variant-numeric:tabular-nums}
+.ro-vl{font-size:10.5px;font-weight:600;font-family:inherit;font-variant-numeric:tabular-nums}
+.ro-note{font-size:11.5px;color:var(--muted);margin:8px 0 0;max-width:92ch;line-height:1.5}
+.ro-weeks{display:grid;gap:0}
+.ro-w{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(150px,1fr) minmax(220px,1.6fr);gap:6px 16px;align-items:center;padding:10px 0;border-top:1px solid var(--rule)}
+.ro-w:first-child{border-top:0}
+@media (max-width:760px){.ro-w{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.ro-w .ro-bar{grid-column:1/-1}}
+.ro-w .wk b{display:block;color:var(--ro-head);font-size:13.5px;font-weight:600}
+.ro-w .wk span{font-size:11.5px;color:var(--muted)}
+.ro-src{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);border-radius:3px;padding:0 5px;margin-left:4px;color:var(--muted);vertical-align:1px}
+.ro-w .tot{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:0}
+.ro-w .tot b{font-size:17px;font-weight:400;color:var(--ink)}
+.ro-bar{display:grid;gap:5px;min-width:0}
+.ro-stack{display:flex;height:20px;border-radius:4px;overflow:hidden;background:var(--rule);font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.ro-stack span{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;overflow:hidden;min-width:0}
+.ro-stack .b{background:var(--brown)} .ro-stack .n{background:var(--ro-lgrey);color:var(--ink)} .ro-stack .a{background:var(--teal)}
+.ro-pill{justify-self:start;font-size:10.5px;font-weight:600;letter-spacing:.04em;border-radius:20px;padding:2px 9px;color:#fff;background:var(--grey)}
+.ro-pill.wet{background:var(--teal)} .ro-pill.dry{background:var(--brown)} .ro-pill.dryseason{background:var(--sand);color:var(--muted)}
+.ro-imd{background:var(--sand);border-radius:8px;padding:12px 14px;display:grid;gap:8px;box-shadow:inset 3px 0 0 var(--gold)}
+.ro-imd .k{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.ro-imd p{margin:0;font-size:13px;line-height:1.55}
+.ro-imd p b{color:var(--ro-head);font-weight:600}
+.ro-imd a{color:var(--teal);font-weight:600;text-decoration:none}
+.ro-imd .m{font-size:11.5px;color:var(--muted)}
+.ro-sc-lede{margin:0 0 10px;font-size:12.5px;color:var(--muted);line-height:1.5}
 </style>
 </head>
 <body>
@@ -208,24 +258,31 @@ footer a{color:var(--teal)}
     <div id="s1body"><div class="panel loading"><span class="spin"></span>Loading the forecast…</div></div>
   </section>
 
+  <section class="sec" id="sro">
+    <div class="kicker">2 · Rain outlook</div>
+    <h3>Rain in the next week and the next six weeks</h3>
+    <p class="lede">Chances of rain from about 170 forecast runs across four weather models, each model counted equally, and ECMWF's 46-day forecast for weeks 3–6, set against the 1991–2020 normal for this exact spot.</p>
+    <div id="srobody"><div class="panel loading"><span class="spin"></span>Loading the forecast ensembles…</div></div>
+  </section>
+
   <section class="sec" id="s2">
-    <div class="kicker">2 · Rainfall so far this year</div>
+    <div class="kicker">3 · Rainfall so far this year</div>
     <h3 id="s2title">Year-to-date rainfall</h3>
     <p class="lede">Measured rainfall from 1 January to yesterday, against the 1991–2020 standard normal for the same dates and against last year. A rainy day is one with 2.5 mm or more, as the India Meteorological Department counts it.</p>
     <div id="s2body"><div class="panel loading"><span class="spin"></span>Loading this year's rainfall record…</div></div>
   </section>
 
   <section class="sec" id="s3">
-    <div class="kicker">3 · Today against normal and last year</div>
+    <div class="kicker">4 · Today against normal and last year</div>
     <h3>How today compares</h3>
     <p class="lede">Normal is the 1991–2020 average for the 15 days centred on today's date. Last year is the same calendar date.</p>
     <div id="s3body"><div class="panel loading"><span class="spin"></span>Building 30 years of climate history (first load of a place takes a few seconds)…</div></div>
   </section>
 
   <section class="sec" id="s4">
-    <div class="kicker">4 · Year-end rainfall outlook</div>
+    <div class="kicker">5 · Year-end rainfall outlook</div>
     <h3 id="s4title">Projected rainfall for the year</h3>
-    <p class="lede">Rain recorded so far, plus the 16-day forecast, plus what usually falls in the rest of the year. The shaded band is the range seen in 8 out of 10 years. The ECMWF seasonal model's outlook is shown alongside as a second opinion.</p>
+    <p class="lede">Rain recorded so far, plus the forecast for the next six weeks, plus what usually falls in the rest of the year. The shaded band is the likely range, from the spread of the forecast runs and of 1991–2020. The ECMWF seasonal model's outlook is shown alongside as a second opinion.</p>
     <div id="s4body"><div class="panel loading"><span class="spin"></span>Working out the outlook…</div></div>
   </section>
 
@@ -237,12 +294,251 @@ footer a{color:var(--teal)}
 
 <script>
 "use strict";
+/* ================= RAIN OUTLOOK MATHS (browser copy of weather_outlook.py; keep the two in step) =================
+   RainCalc.build(ensDaily, ec46Daily|null, C, today, detDaily) -> {days, weeks, models_used, proj_daily, ec46_total}
+   C is the app's buildClimate() result (C.c.t0, C.c.p daily 1991-2020, C.years). */
+const RainCalc = (() => {
+  const NAMES = {ecmwf_ifs025:'ECMWF', ecmwf_aifs025:'ECMWF AI', ncep_gefs025:'GFS (US)', gfs025:'GFS (US)', icon_seamless:'ICON (Germany)'};
+  const WET = 2.5, MOD = 15.6, HEAVY = 64.5, TH = [10, 25, 50, 100];
+  const ok = v => v !== null && v !== undefined && !Number.isNaN(v);
+  const r1 = v => ok(v) ? Math.round(v * 10) / 10 : null;
+  const r3 = v => ok(v) ? Math.round(v * 1000) / 1000 : null;
+  const ms = s => { const [y,m,d] = s.slice(0,10).split('-').map(Number); return Date.UTC(y, m-1, d); };
+  const add = (s, n) => new Date(ms(s) + n*864e5).toISOString().slice(0,10);
+  const diff = (a, b) => Math.round((ms(b) - ms(a)) / 864e5);
+  const mean = a => { const v = a.filter(ok); return v.length ? v.reduce((x,y) => x+y, 0) / v.length : null; };
+  const pctl = (a, p) => { const v = a.filter(ok).sort((x,y) => x-y); if(!v.length) return null; const i = (v.length-1)*p, lo = Math.floor(i), hi = Math.ceil(i); return v[lo] + (v[hi]-v[lo])*(i-lo); };
+
+  function group(daily){
+    const g = {};
+    for (const k of Object.keys(daily)){
+      if (!k.startsWith('precipitation_sum')) continue;
+      const rest = k.slice(17).replace(/^_?member\d+/, '').replace(/^_+/, '');
+      let m = rest || 'ec46';
+      for (const key of Object.keys(NAMES)) if (rest.startsWith(key)) m = key;
+      (g[m] = g[m] || []).push(daily[k]);
+    }
+    return g;
+  }
+  const wq = (pairs, q) => { pairs = pairs.slice().sort((a,b) => a[0]-b[0]); const tot = pairs.reduce((s,p) => s+p[1], 0); if(!tot) return null; let run = 0; for (const [v,w] of pairs){ run += w; if (run >= q*tot - 1e-9) return v; } return pairs[pairs.length-1][0]; };
+  function modelVals(g, i, min=5){ const o = {}; for (const m in g){ const v = g[m].map(s => s[i]).filter((x, j) => i < g[m][j].length && ok(x)); if (v.length >= min) o[m] = v; } return o; }
+  function totals(g, a, b, min=5){ const o = {}; for (const m in g){ const t = g[m].filter(s => s.length > b && s.slice(a, b+1).every(ok)).map(s => s.slice(a, b+1).reduce((x,y) => x+y, 0)); if (t.length >= min) o[m] = t; } return o; }
+  const prob = (by, fn) => { const ps = Object.values(by).map(v => v.filter(fn).length / v.length); return ps.length ? ps.reduce((x,y) => x+y, 0) / ps.length : null; };
+  const pooled = by => Object.values(by).flatMap(v => v.map(x => [x, 1 / v.length]));
+  const any = o => Object.keys(o).length > 0;
+
+  function windowClim(C, dates){
+    const c = C.c, tots = [];
+    for (const y of C.years){
+      let s = 0, n = 0;
+      for (const d of dates){ let md = d.slice(5); if (md === '02-29') md = '02-28'; const i = diff(c.t0, y + '-' + md); if (i >= 0 && i < c.p.length && ok(c.p[i])){ s += c.p[i]; n++; } }
+      if (n === dates.length) tots.push(s);
+    }
+    if (tots.length < 20) return null;
+    return {mean: mean(tots), t33: pctl(tots, 1/3), t67: pctl(tots, 2/3), p10: pctl(tots, .1), p90: pctl(tots, .9)};
+  }
+  function cats(by, cl){
+    if (!cl || cl.t67 < 2) return [null, null, null];
+    const pb = prob(by, v => v < cl.t33), pa = prob(by, v => v > cl.t67);
+    return [pb, Math.max(0, 1 - pb - pa), pa];
+  }
+  function heavyDay(g, a){
+    const by = {};
+    for (const m in g){ const s = g[m].filter(x => x.length > a + 6 && x.slice(a, a+7).every(ok)); if (s.length >= 5) by[m] = s.map(x => Math.max(...x.slice(a, a+7))); }
+    return any(by) ? prob(by, v => v >= HEAVY) : null;
+  }
+
+  function build(ensDaily, ecDaily, C, today, det){
+    const et = ensDaily.time, eg = group(ensDaily);
+    const i0 = et.indexOf(today) >= 0 ? et.indexOf(today) : 0;
+    const days = [];
+    for (let k = 0; k < 14; k++){
+      const i = i0 + k; if (i >= et.length) break;
+      const mv = modelVals(eg, i); if (!any(mv)) break;
+      const pool = pooled(mv), pw = Object.values(mv).map(v => v.filter(x => x >= WET).length / v.length);
+      days.push({date: et[i], pwet: r3(prob(mv, v => v >= WET)), pmod: r3(prob(mv, v => v >= MOD)), pheavy: r3(prob(mv, v => v >= HEAVY)),
+        med: r1(wq(pool, .5)), p10: r1(wq(pool, .1)), p90: r1(wq(pool, .9)), det: r1(det[et[i]]), models: Object.keys(mv).length,
+        agree: r3(Math.max(...pw) - Math.min(...pw))});
+    }
+    const used = Object.keys(eg).filter(m => any(modelVals({[m]: eg[m]}, i0))).map(m => NAMES[m] || m);
+    let ec = null;
+    if (ecDaily && ecDaily.time) ec = {time: ecDaily.time, g: group(ecDaily)};
+    const weeks = [];
+    for (let k = 0; k < 6; k++){
+      const s = add(today, 7*k), e = add(today, 7*k + 6), dates = Array.from({length: 7}, (_, j) => add(s, j));
+      const cl = windowClim(C, dates);
+      let src = null, by = null;
+      if (k < 2){ const a = i0 + 7*k; by = totals(eg, a, a + 6); src = 'ens'; }
+      if ((!by || !any(by)) && ec && ec.time.indexOf(s) >= 0){ const a = ec.time.indexOf(s); by = totals(ec.g, a, a + 6); src = 'ec46'; }
+      const w = {k: k+1, start: s, end: e, src: by && any(by) ? src : null, normal: cl ? r1(cl.mean) : null, t33: cl ? r1(cl.t33) : null, t67: cl ? r1(cl.t67) : null};
+      if (by && any(by)){
+        const pool = pooled(by), [pb, pn, pa] = cats(by, cl), wsum = pool.reduce((x,p) => x + p[1], 0);
+        Object.assign(w, {med: r1(wq(pool, .5)), p10: r1(wq(pool, .1)), p90: r1(wq(pool, .9)), mean: r1(pool.reduce((x,p) => x + p[0]*p[1], 0) / wsum),
+          pb: r3(pb), pn: r3(pn), pa: r3(pa), pt: Object.fromEntries(TH.map(t => [String(t), r3(prob(by, v => v >= t))]))});
+        if (k < 2){ w.pheavyday = r3(heavyDay(eg, i0 + 7*k)); w.det = dates.every(d => d in det) ? r1(dates.reduce((x,d) => x + (det[d] || 0), 0)) : null; }
+      }
+      weeks.push(w);
+    }
+    // daily means for the year-end projection: ensemble days 0-13, then EC46
+    const proj = [];
+    for (let k = 0; k < 14; k++){ const i = i0 + k; const mv = i < et.length ? modelVals(eg, i) : {}; if (!any(mv)) break; proj.push([et[i], mean(Object.values(mv).map(mean))]); }
+    let ecTot = null;
+    if (ec){
+      const lastD = proj.length ? proj[proj.length-1][0] : add(today, -1);
+      for (let i = 0; i < ec.time.length; i++){ const d = ec.time[i]; if (d <= lastD) continue; const mv = modelVals(ec.g, i); if (!any(mv)) break; proj.push([d, mean(Object.values(mv).map(mean))]); }
+      const a = Math.max(0, ec.time.indexOf(today));
+      let endI = ec.time.length - 1, t = totals(ec.g, a, endI);
+      if (!any(t)){ endI--; t = totals(ec.g, a, endI); }
+      if (any(t)){ const v = Object.values(t).flat(); ecTot = {p10: pctl(v, .1), p50: pctl(v, .5), p90: pctl(v, .9), mean: mean(v), end: ec.time[endI]}; }
+    }
+    return {days, weeks, models_used: used, proj_daily: proj.map(([d, v]) => [d, r1(v)]), ec46_total: ecTot};
+  }
+  return {build, windowClim};
+})();
+
+/* ================= RAIN OUTLOOK UI (shared by the Peer Tracker Weather page and the Field Weather app) =================
+   RainUI.html(ro, ctx) -> section HTML;  RainUI.draw(ro) -> draws the day-by-day chart into #roDays.
+   ro  = rain outlook {days[14], weeks[6], models_used, score?}  (same shape from weather_fetch.py and the app's RainCalc)
+   ctx = {today, india, imd:{issued,url,title,summary,season}, imdWeeks:[{label,start,end,text,cat}], score, scoreFor, scoreHint, normalRainyShare} */
+const RainUI = (() => {
+  const ok = v => v !== null && v !== undefined && !Number.isNaN(v);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const f0 = v => ok(v) ? Math.round(v).toLocaleString('en-GB') : 'n/a';
+  const f1 = v => ok(v) ? Number(v).toLocaleString('en-GB', {minimumFractionDigits:1, maximumFractionDigits:1}) : 'n/a';
+  const pc = v => ok(v) ? Math.round(v * 100) + '%' : 'n/a';
+  const dms = s => { const [y,m,d] = s.slice(0,10).split('-').map(Number); return Date.UTC(y, m-1, d); };
+  const add = (s, n) => new Date(dms(s) + n*864e5).toISOString().slice(0,10);
+  const nice = (s, o) => new Date(dms(s)).toLocaleDateString('en-GB', Object.assign({timeZone:'UTC'}, o || {day:'numeric', month:'short'}));
+  const span = (a, b) => a.slice(0,7) === b.slice(0,7) ? `${+a.slice(8)}–${nice(b)}` : `${nice(a)} – ${nice(b)}`;
+  const st = (d, tol) => !ok(d) ? 'na' : Math.abs(d) <= tol ? 'flat' : d > 0 ? 'up' : 'dn';
+  const step = (r, n) => { const raw = r/n, p = Math.pow(10, Math.floor(Math.log10(raw))), q = raw/p; return (q<1.5?1:q<3?2:q<7?5:10)*p; };
+
+  function tile(o){
+    const s = o.cls || 'na';
+    return `<div class="ro-k ${s}${o.hero ? ' hero' : ''}" style="--roc:var(${o.c || '--ro-head'})"><div class="l">${o.l}</div><div class="v">${o.v}<small>${o.u || ''}</small></div><div class="s">${o.s || ''}</div><div class="n ${s}">${o.n || ''}</div></div>`;
+  }
+  function verdict(w){
+    if (!ok(w.pa) || !ok(w.pb)) return {t:'Usually dry this week', c:'dryseason'};
+    if (w.pa >= .5) return {t:'Likely wetter than normal', c:'wet'};
+    if (w.pb >= .5) return {t:'Likely drier than normal', c:'dry'};
+    if (w.pa >= .4 && w.pa - w.pb >= .15) return {t:'Leaning wetter', c:'wet'};
+    if (w.pb >= .4 && w.pb - w.pa >= .15) return {t:'Leaning drier', c:'dry'};
+    return {t:'No clear signal', c:''};
+  }
+  const srcName = s => s === 'ens' ? '4 models' : s === 'ec46' ? 'ECMWF 46-day' : '';
+
+  function html(ro, ctx){
+    if (!ro || !ro.days || !ro.days.length) return `<p class="ro-note">The rain outlook did not load this time. It needs the forecast ensembles and the 1991–2020 normals.</p>`;
+    ctx = ctx || {};
+    const W = ro.weeks || [], w1 = W[0] || {}, w2 = W[1] || {}, d7 = ro.days.slice(0, 7);
+    const expDays = d7.reduce((s, d) => s + (ok(d.pwet) ? d.pwet : 0), 0);
+    const normDays = ok(ctx.normalRainyShare) ? ctx.normalRainyShare * 7 : null;
+    const tol = v => Math.max(2, (v || 0) * .2);            // IMD treats +/-19% as normal
+    const nRuns = (ro.models_used || []).length;
+    // ---- week-ahead tiles
+    const kp = `<div class="ro-kpis">
+      ${tile({hero:true, l:`Rain, ${span(w1.start, w1.end)}`, v:f0(w1.med), u:' mm', c:'--teal',
+        s:`8 in 10 forecasts: ${f0(w1.p10)}–${f0(w1.p90)} mm · normal ${f0(w1.normal)} mm`,
+        cls: st(ok(w1.med) && ok(w1.normal) ? w1.med - w1.normal : null, tol(w1.normal)),
+        n: ok(w1.med) && ok(w1.normal) ? (Math.abs(w1.med - w1.normal) <= tol(w1.normal) ? 'About normal' : `${w1.med > w1.normal ? '▲' : '▼'} ${f0(Math.abs(w1.med - w1.normal))} mm vs normal`) : 'No normal for these dates'})}
+      ${tile({l:'Chance of 25 mm or more', v:pc((w1.pt||{})['25']), c:'--teal', s:`Next 7 days · 50 mm or more: ${pc((w1.pt||{})['50'])}`, n:`Following week: ${pc((w2.pt||{})['25'])}`, cls:'na'})}
+      ${tile({l:'Chance of a heavy-rain day', v:pc(w1.pheavyday), c:'--brick', s:'Any day with 64.5 mm or more (IMD "heavy")', n:`Following week: ${pc(w2.pheavyday)}`, cls:'na'})}
+      ${tile({l:'Likely rainy days', v:f1(expDays), u:' of 7', c:'--brown', s:'Days with 2.5 mm or more, expected',
+        cls: normDays == null ? 'na' : st(expDays - normDays, .75), n: normDays == null ? 'No normal' : `Normal ${f1(normDays)} days`})}
+    </div>`;
+    // ---- day-by-day chart
+    const days = `<section class="panel"><div class="ro-ph"><b>Chance of rain, day by day</b>
+        <div class="ro-lg"><span><i style="background:var(--teal)"></i>Rainy day (2.5 mm+)</span><span><i style="background:var(--gold)"></i>Moderate or more (15.6 mm+)</span><span><i style="background:var(--brick);border-radius:50%"></i>Models disagree</span></div></div>
+      <div class="ro-chart" id="roDays"></div>
+      <p class="ro-note">Each bar is the share of ${nRuns ? nRuns + ' weather models\' ' : ''}forecast runs that give a rainy day, with each model counted equally${(ro.models_used||[]).length ? ' (' + esc(ro.models_used.join(', ')) + ')' : ''}. Under each day: the middle forecast and the range 8 in 10 runs fall within. Week 2 is paler because skill drops after about a week.</p></section>`;
+    // ---- six weeks
+    const rows = W.map(w => {
+      const v = verdict(w), hasCat = ok(w.pa) && ok(w.pb);
+      const seg = (cls, p, lab) => p > 0.005 ? `<span class="${cls}" style="width:${(p*100).toFixed(1)}%" title="${lab} ${pc(p)}">${p >= .16 ? pc(p) : ''}</span>` : '';
+      return `<div class="ro-w"><div class="wk"><b>Week ${w.k}</b><span>${span(w.start, w.end)}</span>${w.src ? `<span class="ro-src">${srcName(w.src)}</span>` : ''}</div>
+        <div class="tot">${ok(w.med) ? `Most likely <b>${f0(w.med)}</b> mm<br>range ${f0(w.p10)}–${f0(w.p90)} · normal ${f0(w.normal)}` : 'No forecast for this week'}</div>
+        <div class="ro-bar">${hasCat ? `<div class="ro-stack" role="img" aria-label="Below normal ${pc(w.pb)}, near normal ${pc(w.pn)}, above normal ${pc(w.pa)}">${seg('b', w.pb, 'Below normal')}${seg('n', w.pn, 'Near normal')}${seg('a', w.pa, 'Above normal')}</div>` :
+          `<div class="ro-note" style="margin:0">Normal for these dates is little or no rain · chance of 10 mm or more: ${pc((w.pt||{})['10'])}</div>`}
+          <span class="ro-pill ${v.c}">${v.t}</span></div></div>`;
+    }).join('');
+    const weeks = `<section class="panel"><div class="ro-ph"><b>Next six weeks against normal</b>
+        <div class="ro-lg"><span><i style="background:var(--brown)"></i>Below normal</span><span><i style="background:var(--ro-lgrey)"></i>Near normal</span><span><i style="background:var(--teal)"></i>Above normal</span></div></div>
+      <div class="ro-weeks">${rows}</div>
+      <p class="ro-note">Below, near and above normal are the driest, middle and wettest thirds of the same seven days in 1991–2020, so with no forecast skill each would be about 33%. Weeks 1–2 use the four-model ensemble; weeks 3–6 use ECMWF's 46-day forecast (51 runs). Treat weeks 3–6 as a lean, not a promise. The scorecard below will show how far to trust it here.</p></section>`;
+    // ---- IMD
+    let imd = '';
+    if (ctx.india){
+      const I = ctx.imd;
+      if (I){
+        const wk = (ctx.imdWeeks || []).filter(w => !ctx.today || w.end >= ctx.today);
+        const catT = c => c === 'above' ? 'above normal' : c === 'below' ? 'below normal' : c === 'near' ? 'normal' : '';
+        imd = `<div class="ro-imd"><div class="k">India Meteorological Department</div>
+          ${wk.length ? wk.map(w => `<p><b>${esc(w.label || 'Week')} · ${span(w.start, w.end)}${w.cat ? ' · ' + catT(w.cat) : ''}</b><br>${esc(w.text || '')}</p>`).join('') : (I.summary ? `<p>${esc(I.summary)}</p>` : '<p>IMD\'s latest weekly outlook does not cover the coming days yet.</p>')}
+          ${I.season && I.season.text ? `<p><b>North-east monsoon season, October–December</b><br>${esc(I.season.text)}</p>` : ''}
+          <div class="m">Weekly outlook issued ${I.issued ? esc(nice(I.issued, {day:'numeric', month:'short', year:'numeric'})) : 'n/a'}${I.url ? ` · <a href="${esc(I.url)}" target="_blank" rel="noopener">read IMD's bulletin ↗</a>` : ''}${I.season && I.season.url ? ` · <a href="${esc(I.season.url)}" target="_blank" rel="noopener">season outlook ↗</a>` : ''}. IMD issues a new outlook each Thursday; it is picked up the next morning.</div></div>`;
+      } else {
+        imd = `<div class="ro-imd"><div class="k">India Meteorological Department</div><p>IMD's weekly extended-range outlook is not loaded here. <a href="https://mausam.imd.gov.in/imd_latest/contents/extendedrangeforecast.php" target="_blank" rel="noopener">Open IMD's extended-range page ↗</a></p></div>`;
+      }
+    }
+    // ---- scorecard
+    let sc = '';
+    const S = ctx.score;
+    if (S){
+      const sg = S.single || {}, en = S.ensemble || {}, ec = S.ec46_cat || {}, im = S.imd_cat || {};
+      const first = S.first_week_result ? nice(S.first_week_result, {day:'numeric', month:'short'}) : 'next week';
+      const ensBetter = ok(en.week_mae) && ok(sg.week_mae) ? sg.week_mae - en.week_mae : null;
+      const dayBetter = ok(en.day_hit) && ok(sg.day_hit) ? en.day_hit - sg.day_hit : null;
+      const ecFirst = S.since ? nice(add(S.since, 21), {day:'numeric', month:'short'}) : 'later';
+      sc = `<section class="panel"><div class="ro-ph"><b>Scorecard${ctx.scoreFor ? ' · ' + esc(ctx.scoreFor) : ''}</b><span>last ${S.window_days || 28} days of forecasts, checked against the rain that fell</span></div>
+        <p class="ro-sc-lede">Every morning's forecasts are saved and marked once the week is over. The single standard forecast's record goes back four weeks from the forecast archive; the newer methods started on ${esc(nice(S.since, {day:'numeric', month:'short', year:'numeric'}))}.</p>
+        <div class="ro-kpis five">
+          ${tile({hero:true, l:'Week totals · single forecast', v: ok(sg.week_mae) ? '±' + f0(sg.week_mae) : '—', u: ok(sg.week_mae) ? ' mm' : '', c:'--brown', s:`Average miss on the 7-day total, ${sg.weeks || 0} weeks`, n:'The old method, for comparison', cls:'na'})}
+          ${tile({l:'Week totals · ensemble', v: ok(en.week_mae) ? '±' + f0(en.week_mae) : '—', u: ok(en.week_mae) ? ' mm' : '', c:'--teal',
+            s: ok(en.week_mae) ? `${en.weeks} weeks${ok(en.in_range) ? ` · actual inside the 8-in-10 range ${pc(en.in_range)}` : ''}` : `First result ${first}`,
+            cls: ensBetter == null ? 'na' : st(ensBetter, .5), n: ensBetter == null ? 'Builds up from today' : ensBetter >= 0 ? `${f0(ensBetter)} mm closer than single` : `${f0(-ensBetter)} mm further than single`})}
+          ${tile({l:'Rain or no rain, day by day', v: ok(en.day_hit) ? pc(en.day_hit) : ok(sg.day_hit) ? pc(sg.day_hit) : '—', c:'--teal',
+            s: ok(en.day_hit) ? `Ensemble right, ${en.days} days · single ${pc(sg.day_hit)}` : `Single forecast right, ${sg.days || 0} days`,
+            cls: dayBetter == null ? 'na' : st(dayBetter, .02), n: ok(en.day_hit) ? (dayBetter >= 0 ? 'Ensemble better' : 'Single better') : 'Ensemble results start tomorrow'})}
+          ${tile({l:'Weeks 3–6 · right category', v: ec.n ? pc(ec.hit) : '—', c:'--gold', s: ec.n ? `${ec.n} weeks checked · 33% by chance` : `First result about ${ecFirst}`, cls: ec.n ? st(ec.hit - 1/3, .05) : 'na', n:'ECMWF 46-day forecast'})}
+          ${tile({l:'IMD · right category', v: im.n ? pc(im.hit) : '—', c:'--gold', s: im.n ? `${im.n} weeks checked` : (ctx.india ? 'Scored when IMD gives above, near or below normal for this area' : 'IMD covers India only'), cls: im.n ? st(im.hit - 1/3, .05) : 'na', n: ctx.india ? 'Weekly outlook' : ''})}
+        </div></section>`;
+    } else if (ctx.scoreHint){
+      sc = `<section class="panel"><div class="ro-ph"><b>Scorecard</b></div><p class="ro-sc-lede" style="margin:0">${ctx.scoreHint}</p></section>`;
+    }
+    return `<div class="ro">${kp}${days}${weeks}${imd}${sc}</div>`;
+  }
+
+  function draw(ro){
+    const box = document.getElementById('roDays'); if (!box || !box.offsetParent || !ro || !ro.days) return;
+    const D = ro.days, n = D.length, Wd = Math.max(box.clientWidth || 0, n * 46 + 56), pl = 40, pr = 12, top = 34, h = 120, Ht = top + h + 74;
+    const cw = (Wd - pl - pr) / n, x = i => pl + cw * i + cw / 2, y = p => top + h - p * h;
+    let s = '';
+    [0, .5, 1].forEach(p => s += `<line x1="${pl}" x2="${Wd-pr}" y1="${y(p)}" y2="${y(p)}" stroke="var(--rule)"${p === .5 ? ' stroke-dasharray="3 3"' : ''}/><text class="ro-ax" x="${pl-6}" y="${y(p)+3.5}" text-anchor="end">${p*100}%</text>`);
+    if (n > 7) s += `<line x1="${pl + cw*7}" x2="${pl + cw*7}" y1="${top-14}" y2="${top+h+68}" stroke="var(--rule)"/><text class="ro-ax" x="${pl + cw*7 + 4}" y="${top-6}">Week 2</text>`;
+    s += `<text class="ro-ax" x="${pl+2}" y="${top-6}">Week 1</text>`;
+    D.forEach((d, i) => {
+      const op = i < 7 ? 1 : .55, bw = Math.min(26, cw * .62);
+      if (ok(d.pwet) && d.pwet > 0) s += `<rect x="${x(i)-bw/2}" y="${y(d.pwet)}" width="${bw}" height="${top+h-y(d.pwet)}" rx="3" fill="var(--teal)" opacity="${op}"/>`;
+      if (ok(d.pmod) && d.pmod > 0) s += `<rect x="${x(i)-bw/4}" y="${y(d.pmod)}" width="${bw/2}" height="${top+h-y(d.pmod)}" rx="2" fill="var(--gold)" opacity="${op}"/>`;
+      s += `<text class="ro-vl" x="${x(i)}" y="${y(d.pwet || 0) - 5}" text-anchor="middle" style="fill:var(--ink)">${ok(d.pwet) ? Math.round(d.pwet*100) + '%' : ''}</text>`;
+      if (ok(d.agree) && d.agree >= .4) s += `<circle cx="${x(i)}" cy="${y(d.pwet || 0) - 19}" r="3.5" fill="var(--brick)"><title>The models disagree on this day</title></circle>`;
+      const wd = new Date(dms(d.date)).toLocaleDateString('en-GB', {timeZone:'UTC', weekday:'short'});
+      s += `<text class="ro-ax" x="${x(i)}" y="${top+h+14}" text-anchor="middle" style="font-weight:600;fill:var(--ink)">${wd}</text><text class="ro-ax" x="${x(i)}" y="${top+h+27}" text-anchor="middle">${+d.date.slice(8)}</text>`;
+      s += `<text class="ro-vl" x="${x(i)}" y="${top+h+46}" text-anchor="middle" style="fill:var(--teal)">${ok(d.med) ? (d.med < .5 ? '0' : f0(d.med)) : ''}</text><text class="ro-ax" x="${x(i)}" y="${top+h+60}" text-anchor="middle">${ok(d.p10) && ok(d.p90) && d.p90 >= 1 ? f0(d.p10) + '–' + f0(d.p90) : ''}</text>`;
+    });
+    s += `<text class="ro-ax" x="${pl-6}" y="${top+h+46}" text-anchor="end">mm</text><text class="ro-ax" x="${pl-6}" y="${top+h+60}" text-anchor="end">range</text>`;
+    box.innerHTML = `<svg width="${Wd}" height="${Ht}" viewBox="0 0 ${Wd} ${Ht}" role="img" aria-label="Chance of rain each day for the next two weeks">${s}</svg>`;
+  }
+  return {html, draw};
+})();
+
 /* ---------- Constants ---------- */
 const API = {
   fc:  'https://api.open-meteo.com/v1/forecast',
   ar:  'https://archive-api.open-meteo.com/v1/archive',
   se:  'https://seasonal-api.open-meteo.com/v1/seasonal',
   geo: 'https://geocoding-api.open-meteo.com/v1/search',
+  ens: 'https://ensemble-api.open-meteo.com/v1/ensemble',
   rev: 'https://api.bigdatacloud.net/data/reverse-geocode-client'
 };
 const DEFAULT_PLACE = {name:'Nindra', label:'Chittoor District, Andhra Pradesh, India', lat:13.382, lon:79.707};
@@ -357,6 +653,17 @@ async function getClimate(p){
   store.set('nfw_clim_index', idx);
   return c;
 }
+function getEnsemble(p){
+  return getJSON(API.ens, {latitude:p.lat, longitude:p.lon, daily:'precipitation_sum', models:'ecmwf_ifs025,ecmwf_aifs025,gfs025,icon_seamless', forecast_days:15, timezone:'auto'});
+}
+function getEC46(p){
+  return getJSON(API.se, {latitude:p.lat, longitude:p.lon, daily:'precipitation_sum', models:'ecmwf_ec46', forecast_days:46, timezone:'auto'});
+}
+let PUB = undefined;   // outlook.json published beside the app each morning: IMD outlook + scorecards for the Nykas places
+function getPublic(){
+  if (PUB !== undefined) return Promise.resolve(PUB);
+  return fetch('outlook.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).catch(() => null).then(j => (PUB = j));
+}
 function getSeasonal(p){
   return getJSON(API.se, {latitude:p.lat, longitude:p.lon, daily:'precipitation_sum', timezone:'auto'});
 }
@@ -431,10 +738,10 @@ async function loadPlace(place, opts){
   S = {place};
   saveRecent(place);
   renderPlace();
-  ['s1','s2','s3','s4'].forEach(id => $('#'+id+'body').innerHTML = loadingHTML(id));
+  ['s1','sro','s2','s3','s4'].forEach(id => $('#'+id+'body').innerHTML = loadingHTML(id));
   let fc;
   try { fc = await getForecast(place); }
-  catch(e){ if(my!==runId) return; $('#s1body').innerHTML = errHTML(e.message); ['s2','s3','s4'].forEach(id => $('#'+id+'body').innerHTML = errHTML('Waiting for the forecast, which did not load.')); return; }
+  catch(e){ if(my!==runId) return; $('#s1body').innerHTML = errHTML(e.message); ['sro','s2','s3','s4'].forEach(id => $('#'+id+'body').innerHTML = errHTML('Waiting for the forecast, which did not load.')); return; }
   if(my !== runId) return;
   S.fc = fc;
   const ti = fc.daily.time.length > 14 ? 14 : 0;
@@ -451,7 +758,10 @@ async function loadPlace(place, opts){
     ly: getLastYearDay(place, S.lyDate),
     rec: getRainRecord(place, (S.year-1)+'-01-01', S.yesterday),
     clim: getClimate(place),
-    seas: getSeasonal(place)
+    seas: getSeasonal(place),
+    ens: getEnsemble(place),
+    ec46: getEC46(place),
+    pub: getPublic()
   };
   jobs.ly.then(j => {
     if(my!==runId) return;
@@ -462,14 +772,22 @@ async function loadPlace(place, opts){
     renderToday();
   }).catch(e => { if(my===runId){ S.lyErr = e.message; renderToday(); } });
 
-  const res = await Promise.allSettled([jobs.ly, jobs.rec, jobs.clim, jobs.seas]);
+  const res = await Promise.allSettled([jobs.ly, jobs.rec, jobs.clim, jobs.seas, jobs.ens, jobs.ec46, jobs.pub]);
   if(my !== runId) return;
-  const [rLy, rRec, rClim, rSeas] = res;
+  const [rLy, rRec, rClim, rSeas, rEns, rEc, rPub] = res;
   if(rRec.status === 'fulfilled') S.rec = rRec.value; else S.recErr = rRec.reason.message;
   if(rClim.status === 'fulfilled') S.C = buildClimate(rClim.value); else S.climErr = rClim.reason.message;
   if(rSeas.status === 'fulfilled') S.seas = rSeas.value;
+  S.pub = rPub.status === 'fulfilled' ? rPub.value : null;
+  S.ro = null;
+  if (rEns.status === 'fulfilled' && S.C){
+    try {
+      const det = {}; S.fc.daily.time.forEach((t,i) => { if (t >= S.today && ok(S.fc.daily.precipitation_sum[i])) det[t] = S.fc.daily.precipitation_sum[i]; });
+      S.ro = RainCalc.build(rEns.value.daily, rEc.status === 'fulfilled' ? rEc.value.daily : null, S.C, S.today, det);
+    } catch(e){ S.roErr = 'The rain outlook could not be worked out (' + e.message + ').'; }
+  } else S.roErr = rEns.status === 'rejected' ? rEns.reason.message : 'The 1991–2020 normals are needed for the rain outlook.';
   buildRain();
-  renderRainYTD(); renderCompare(); renderOutlook();
+  renderRainOutlook(); renderRainYTD(); renderCompare(); renderOutlook();
 }
 
 /* Daily rain series for last year and this year (reanalysis, topped up with forecast-model history for the last few days) */
@@ -504,7 +822,7 @@ function buildRain(){
 
 /* ---------- Rendering helpers ---------- */
 function loadingHTML(id){
-  const t = {s1:'Loading the forecast…', s2:'Loading this year’s rainfall record…', s3:'Building 30 years of climate history (first load of a place takes a few seconds)…', s4:'Working out the outlook…'}[id];
+  const t = {sro:'Loading the forecast ensembles…', s1:'Loading the forecast…', s2:'Loading this year’s rainfall record…', s3:'Building 30 years of climate history (first load of a place takes a few seconds)…', s4:'Working out the outlook…'}[id];
   return `<div class="panel loading"><span class="spin"></span>${t}</div>`;
 }
 function errHTML(m){ return `<div class="err">${esc(m)}<br><button class="btn ghost" type="button" data-retry>Try again</button></div>`; }
@@ -651,7 +969,25 @@ function drawHourlyTable(){
   if(nc) box.scrollLeft = Math.max(0, nc.offsetLeft - 140);
 }
 
-/* ---------- Section 2: rain so far ---------- */
+/* ---------- Section 2: rain outlook ---------- */
+function haversineKm(a, b){ const R = 6371, t = x => x*Math.PI/180, dLa = t(b.lat-a.lat), dLo = t(b.lon-a.lon); const h = Math.sin(dLa/2)**2 + Math.cos(t(a.lat))*Math.cos(t(b.lat))*Math.sin(dLo/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
+function renderRainOutlook(){
+  const body = $('#srobody');
+  if (!S.ro){ body.innerHTML = errHTML(S.roErr || 'The rain outlook did not load.'); return; }
+  const P = S.pub, tracked = P && P.places ? P.places.map(q => Object.assign({km: haversineKm(S.place, q)}, q)).sort((a,b) => a.km - b.km) : [];
+  const near = tracked.length && tracked[0].km <= 30 ? tracked[0] : null;
+  const india = (S.fc && S.fc.timezone === 'Asia/Kolkata') || /India/.test(S.place.label || '');
+  const imd = P && P.imd ? P.imd : null, reg = near && near.imd_region;
+  const imdWeeks = imd ? (imd.weeks || []).map(w => ({label: w.label, start: w.start, end: w.end, text: (reg && (w.regional_text || {})[reg]) || w.text, cat: reg ? (w.categories || {})[reg] : null})) : [];
+  const N = windowNormal(S.C, S.md);
+  const hint = tracked.length ? `The scorecard is kept every morning for ${tracked.map(q => `<button class="chip" type="button" data-track="${tracked.indexOf(q)}">${esc(q.name)}</button>`).join(' ')}. Pick one to see how the forecasts have done there.` :
+    'The scorecard is kept every morning for Nindra, London, Chennai and Birmingham. It shows here when the app is opened from its website.';
+  S.tracked = tracked;
+  body.innerHTML = RainUI.html(S.ro, {today: S.today, india, imd, imdWeeks, score: near ? near.score : null, scoreFor: near ? near.name : null, scoreHint: near ? null : hint, normalRainyShare: N && N.rainyShare});
+  RainUI.draw(S.ro);
+}
+
+/* ---------- Section 3: rain so far ---------- */
 function imdCategory(dep){
   if(!ok(dep)) return null;
   if(dep <= -99.5) return ['No rain','deficient']; if(dep <= -60) return ['Large deficient','deficient']; if(dep <= -20) return ['Deficient','deficient'];
@@ -747,8 +1083,15 @@ function renderOutlook(){
   if(!R || !S.C){ body.innerHTML = errHTML(!R ? (S.recErr || 'The rainfall record did not load.') : ('The climate history did not load. ' + (S.climErr||''))); return; }
   const C = S.C, Y = S.year, yEnd = Y + '-12-31';
   // forecast part: today onwards
-  const fcPart = [];
-  S.fc.daily.time.forEach((t,i) => { if(t >= S.today && t <= yEnd) fcPart.push({d:t, v: ok(S.fc.daily.precipitation_sum[i]) ? S.fc.daily.precipitation_sum[i] : 0}); });
+  const fcPart = []; let fcSrc = 'single', spLo = 0, spHi = 0;
+  if (S.ro && S.ro.proj_daily && S.ro.proj_daily.length){
+    S.ro.proj_daily.forEach(([t, v]) => { if (t >= S.today && t <= yEnd) fcPart.push({d:t, v: ok(v) ? v : 0}); });
+    fcSrc = 'ensemble';
+    const et = S.ro.ec46_total;
+    if (et && fcPart.length){ const frac = Math.min(1, fcPart.length / Math.max(1, D.diff(S.today, et.end) + 1)); spLo = (et.mean - et.p10) * frac; spHi = (et.p90 - et.mean) * frac; }
+  } else {
+    S.fc.daily.time.forEach((t,i) => { if(t >= S.today && t <= yEnd) fcPart.push({d:t, v: ok(S.fc.daily.precipitation_sum[i]) ? S.fc.daily.precipitation_sum[i] : 0}); });
+  }
   const fcEnd = fcPart.length ? fcPart[fcPart.length-1].d : S.yesterday, fcSum = sum(fcPart.map(x=>x.v));
   const base = R.ytd, baseFc = base + fcSum;
   // remaining days after the forecast
@@ -756,7 +1099,7 @@ function renderOutlook(){
   const startMD = fcEnd.slice(5);
   const remCum = C.years.map(y => rem.map(d => { const a = cumAt(C.cum, y, d.slice(5)), b = cumAt(C.cum, y, startMD); return ok(a)&&ok(b) ? a-b : null; }));
   const rMean = rem.map((_,k) => mean(remCum.map(r => r[k]))), rP10 = rem.map((_,k) => pctl(remCum.map(r => r[k]), .1)), rP90 = rem.map((_,k) => pctl(remCum.map(r => r[k]), .9));
-  const proj = baseFc + (last(rMean)||0), lo = baseFc + (last(rP10)||0), hi = baseFc + (last(rP90)||0);
+  const proj = baseFc + (last(rMean)||0), lo = Math.max(base, baseFc - spLo + (last(rP10)||0)), hi = baseFc + spHi + (last(rP90)||0);
   // seasonal model (ensemble mean of whatever members are returned)
   let seasCum = null, seasTotal = null, seasCover = 0;
   if(S.seas && S.seas.daily && rem.length){
@@ -769,19 +1112,19 @@ function renderOutlook(){
   const vsN = ok(R.nAnnual) ? (proj - R.nAnnual)/R.nAnnual*100 : null;
   const tiles = [
     tile({hero:true, label:`Projected ${Y} total`, value:f0(proj), unit:' mm', color:'--gold', sub: ok(vsN) ? `${vsN>=0?'+':''}${f0(vsN)}% of a normal year` : '', cmp:{delta: ok(R.nAnnual) ? proj - R.nAnnual : null, tol: Math.max(5, R.nAnnual*.05), unit:' mm', dp:0, vs:'vs normal year'}}),
-    tile({label:'Likely range', value:`${f0(lo)}–${f0(hi)}`, unit:' mm', color:'--brown', sub:'8 years in 10 end inside this', dtext:'Spread from 1991–2020'}),
+    tile({label:'Likely range', value:`${f0(lo)}–${f0(hi)}`, unit:' mm', color:'--brown', sub:'8 in 10 outcomes end inside this', dtext: fcSrc === 'ensemble' ? 'Forecast runs + 1991–2020' : 'Spread from 1991–2020'}),
     tile({label:'Normal year', value:f0(R.nAnnual), unit:' mm', color:'--grey', sub:'1991–2020 average', dtext:'Benchmark'}),
     tile({label:`${Y-1} total`, value:f0(R.lyTotal), unit:' mm', color:'--teal', sub:'Full calendar year', cmp:{delta: proj - R.lyTotal, tol: Math.max(5, R.lyTotal*.05), unit:' mm', dp:0, vs:`projection vs ${Y-1}`}}),
     tile({label:'Seasonal model', value: ok(seasTotal) ? f0(seasTotal) : 'n/a', unit: ok(seasTotal) ? ' mm' : '', color:'--brown', sub: ok(seasTotal) ? 'ECMWF SEAS5 for the rest of the year' : 'Outlook not available for this place', cmp: ok(seasTotal) ? {delta: seasTotal - proj, tol: Math.max(5, proj*.03), unit:' mm', dp:0, vs:'vs main projection'} : null, dtext: ok(seasTotal) ? null : 'No comparison'})
   ];
-  S.out = {fcPart, fcEnd, base, baseFc, rem, rMean, rP10, rP90, seasCum, proj};
+  S.out = {fcPart, fcEnd, base, baseFc, rem, rMean, rP10, rP90, seasCum, proj, spLo, spHi};
   body.innerHTML = `<div class="tiles five">${tiles.join('')}</div>
     <div class="panel" style="margin-top:12px">
       <div class="ph"><h4>Running rainfall total through the year</h4>
-        <div class="legend"><span><i style="background:var(--gold)"></i>${Y} measured</span><span style="color:var(--gold)"><i class="dash"></i>16-day forecast and projection</span><span><i class="box" style="background:var(--gold);opacity:.18"></i>Likely range</span>${seasCum ? '<span style="color:var(--brown)"><i class="dash"></i>Seasonal model</span>' : ''}<span><i style="background:var(--teal)"></i>${Y-1}</span><span><i style="background:var(--lgrey)"></i>Normal</span></div></div>
+        <div class="legend"><span><i style="background:var(--gold)"></i>${Y} measured</span><span style="color:var(--gold)"><i class="dash"></i>Forecast and projection</span><span><i class="box" style="background:var(--gold);opacity:.18"></i>Likely range</span>${seasCum ? '<span style="color:var(--brown)"><i class="dash"></i>Seasonal model</span>' : ''}<span><i style="background:var(--teal)"></i>${Y-1}</span><span><i style="background:var(--lgrey)"></i>Normal</span></div></div>
       <div class="readout" id="cumRead">Hover or tap the chart to read any date.</div>
       <div class="chartbox" id="cumChart"></div>
-      <div class="summary"><b>How the projection is built</b>${f0(base)} mm measured to ${D.nice(S.yesterday)}, plus ${f1(fcSum)} mm forecast from ${D.nice(S.today)} to ${D.nice(fcEnd)}, plus ${f0(last(rMean))} mm, which is what fell on average from ${D.nice(D.add(fcEnd,1))} to 31 Dec in 1991–2020. Forecasts beyond about two weeks have little skill for daily rain, so the climate record carries the rest of the year, and the seasonal model is shown as a cross-check.</div>
+      <div class="summary"><b>How the projection is built</b>${f0(base)} mm measured to ${D.nice(S.yesterday)}, plus ${f1(fcSum)} mm forecast from ${D.nice(S.today)} to ${D.nice(fcEnd)}${fcSrc === 'ensemble' ? ' (the four-model ensemble for two weeks, then the average of ECMWF\'s 46-day runs)' : ''}${rem.length ? `, plus ${f0(last(rMean))} mm, which is what fell on average from ${D.nice(D.add(fcEnd,1))} to 31 Dec in 1991–2020` : ''}. Beyond six weeks the climate record carries the rest of the year, and the seasonal model is shown as a cross-check.</div>
     </div>`;
   drawCumulative();
 }
@@ -796,7 +1139,7 @@ function drawCumulative(){
   const meas = []; { let run = 0; R.thisYear.forEach(x => { run += x.v||0; meas.push(run); }); }
   const fcLine = [{i: meas.length-1, v: O.base}]; { let run = O.base; O.fcPart.forEach(x => { run += x.v; fcLine.push({i: idx(x.d), v: run}); }); }
   const fcI = idx(O.fcEnd);
-  const proj = O.rem.map((d,k) => ({i: idx(d), m: O.baseFc + (O.rMean[k]||0), lo: O.baseFc + (O.rP10[k]||0), hi: O.baseFc + (O.rP90[k]||0), s: O.seasCum ? O.baseFc + O.seasCum[k] : null}));
+  const proj = O.rem.map((d,k) => ({i: idx(d), m: O.baseFc + (O.rMean[k]||0), lo: Math.max(O.base, O.baseFc - (O.spLo||0) + (O.rP10[k]||0)), hi: O.baseFc + (O.spHi||0) + (O.rP90[k]||0), s: O.seasCum ? O.baseFc + O.seasCum[k] : null}));
   const all = [...normal, ...lastY, ...meas, ...fcLine.map(p=>p.v), ...proj.map(p=>p.hi), ...proj.map(p=>p.s)].filter(ok);
   const W = chartWidth(box, 340), padL = 44, padR = 64, top = 26, h = 260, xH = 24, Ht = top+h+xH;
   const mxRaw = Math.max(50, ...all), step = niceStep(mxRaw, 5), mx = Math.ceil(mxRaw/step)*step;
@@ -893,10 +1236,11 @@ $('#searchForm').addEventListener('submit', e => { e.preventDefault(); doSearch(
 $('#locBtn').addEventListener('click', () => useLocation(false));
 document.addEventListener('click', e => {
   const p = e.target.closest('[data-pick]'); if(p){ pick(+p.dataset.pick); return; }
+  const tk = e.target.closest('[data-track]'); if(tk && S && S.tracked){ const q = S.tracked[+tk.dataset.track]; if(q) loadPlace({name:q.name, label:'', lat:q.lat, lon:q.lon}); return; }
   const r = e.target.closest('[data-recent]'); if(r){ const list = store.get('nfw_recent') || []; const pl = list[+r.dataset.recent]; if(pl) loadPlace(pl); return; }
   if(e.target.closest('[data-retry]') && S){ loadPlace(S.place); }
 });
-let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if(!S) return; if(S.fc) drawHourly(); if(S.R) drawMonthly(); if(S.out) drawCumulative(); }, 180); });
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if(!S) return; if(S.fc) drawHourly(); if(S.ro) RainUI.draw(S.ro); if(S.R) drawMonthly(); if(S.out) drawCumulative(); }, 180); });
 
 /* ---------- Start ---------- */
 (function start(){
