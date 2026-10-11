@@ -1411,7 +1411,7 @@ const RainMap = (() => {
     if (st.map) return st.map;
     const el = $('#rmMap'); el.innerHTML = '';
     const touch = L.Browser.mobile || coarse();
-    const m = L.map(el, {dragging: !touch, scrollWheelZoom: false, minZoom: 5, maxZoom: 10, zoomSnap: 0.5});
+    const m = L.map(el, {dragging: !touch, scrollWheelZoom: false, minZoom: 5, maxZoom: 11, zoomSnap: 0.25});
     // grey OpenStreetMap drawn over the rain colours with a multiply blend, so roads, towns and labels stay sharp on top of the rain
     m.createPane('rain'); m.getPane('rain').style.zIndex = 150;
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, className: 'rm-tiles',
@@ -1422,10 +1422,14 @@ const RainMap = (() => {
       const when = st.sel === 'week' ? 'next 7 days' : D.nice(st.data.dates[st.sel], {weekday: 'short', day: 'numeric', month: 'short'});
       L.popup().setLatLng(e.latlng).setContent(ok(v) ? `<b>${mm(v)}</b> · ${when}${st.sel !== 'week' && v >= 0.1 ? '<br>' + imdWord(v) : ''}` : 'Outside the forecast grid').openOn(m);
     });
-    const b = bounds(st.place);
-    m.fitBounds([[b.s, b.w], [b.n, b.e]], {padding: [6, 6]});
-    m.setMaxBounds([[b.s - 3, b.w - 3], [b.n + 3, b.e + 3]]);
-    st.map = m;
+    const b = bounds(st.place), fit = () => { if (st.map !== m || st.moved) return; m.invalidateSize(); m.fitBounds([[b.s, b.w], [b.n, b.e]], {padding: [4, 4], animate: false}); };
+    st.moved = false; st.map = m;
+    m.setView([st.place.lat, st.place.lon], 7, {animate: false});
+    fit(); requestAnimationFrame(fit); setTimeout(fit, 400);
+    // keep the whole forecast area in view as the page settles or the phone turns, until the user zooms the map themselves
+    m.on('zoomstart', e => { if (e && e.originalEvent) st.moved = true; });
+    m.getContainer().addEventListener('pointerdown', () => { st.moved = true; }, {passive: true});
+    if ('ResizeObserver' in window) new ResizeObserver(() => fit()).observe(el);
     return m;
   }
   function draw(){
