@@ -1,12 +1,19 @@
 {
+  "id": "./",
   "name": "Nykas Field Weather",
   "short_name": "Field Weather",
+  "description": "Forecast hour by hour, rain outlook and rain map, rainfall to date against the 30-year normal, and the year-end rainfall outlook.",
+  "lang": "en-GB",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0A2A63",
+  "orientation": "any",
+  "background_color": "#08235B",
   "theme_color": "#08235B",
+  "categories": ["weather", "business"],
   "icons": [
     {"src": "nfw-icon-180-v3.png", "sizes": "180x180", "type": "image/png"},
+    {"src": "nfw-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
     {"src": "nfw-icon-512-v3.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
   ]
 }
